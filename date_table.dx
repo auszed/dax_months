@@ -1,0 +1,77 @@
+Date =
+
+// extracting the last and first day of the data
+
+VAR max_date = choose_max_day
+
+VAR min_date = choose_min_day
+
+VAR max_year = YEAR(max_date)
+
+VAR max_month = MONTH(max_date)
+
+VAR max_day = DAY(max_date)
+
+VAR min_year = YEAR(min_date)
+
+VAR min_month = MONTH(min_date)
+
+VAR min_day = DAY(min_date)
+
+RETURN
+
+// month - day - year
+
+// Verify the starting date and end date
+
+ADDCOLUMNS (CALENDAR (DATE(min_year, min_month, min_day),DATE(max_year,max_month,max_day)),
+
+        "Month Number", MONTH ( [Date] ),
+
+        "year", RIGHT(YEAR ( [Date] ),4),
+
+        "year and Month", RIGHT(YEAR ( [Date] ),2) &  FORMAT ( [Date], "mm" ),
+
+        "year Month and day", RIGHT(YEAR ( [Date] ),4) & " " & FORMAT ( [Date], "mm" ) & " " & FORMAT( [Date] , "dd"),
+
+        "Calendar Year", "CY " & YEAR ( [Date] ),
+
+        "Month Name", FORMAT ( [Date], "mmmm" ),
+
+        "Weekday", FORMAT ( [Date], "dddd" ),
+
+        "Weekday number", WEEKDAY( [Date] ),
+
+        "Week number", FORMAT ( [Date], "ww" ),
+
+        "Quarter", "Q" & TRUNC ( ( MONTH ( [Date] ) - 1 ) / 3 ) + 1,
+
+        "Day", FORMAT ( [Date], "d" ),
+
+        "Month", RIGHT(YEAR ( [Date] ),2) & " " &  FORMAT ( [Date], "mmm" ),
+
+        "Days", RIGHT(YEAR ( [Date] ),2) & " " &  FORMAT ( [Date], "mmm" ) & " " &  FORMAT ([Date], "d"  ),
+
+        // preparing the week
+
+        "Year and weeks",  RIGHT(YEAR ( [Date] ),4) & " W" & SWITCH(FORMAT ( [Date], "ww" ),
+
+                                                                            "1","01",
+
+                                                                            "2","02",
+
+                                                                            "3","03",
+
+                                                                            "4","04",
+
+                                                                            "5","05",
+
+                                                                            "6","06",
+
+                                                                            "7","07",
+
+                                                                            "8","08",
+
+                                                                            "9","09",
+
+                                                                            FORMAT ( [Date], "ww"))
